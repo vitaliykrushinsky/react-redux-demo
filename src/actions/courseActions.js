@@ -1,5 +1,6 @@
 import * as types from './actionTypes';
 import courseApi from '../api/mockCourseApi';
+import {beginAjaxCall, ajaxCallError} from './ajaxStatusActions';
 
 function loadCoursesSuccess(courses) {
 	// Path 2;
@@ -16,6 +17,7 @@ export function updateCourseSuccess(course) {
 
 export function loadCourses() {
 	return function (dispatch) { // redux-thunk
+		dispatch(beginAjaxCall());
 		return courseApi.getAllCourses().then(     // simulate API call
 			courses => dispatch(loadCoursesSuccess(courses))
 		).catch(error => {
@@ -26,9 +28,11 @@ export function loadCourses() {
 
 export function saveCourse(course) {
 	return function (dispatch, getState) { // getState function to get piece of data what you need from store
+		dispatch(beginAjaxCall());
 		return courseApi.saveCourse(course).then(course => {
 			course.id ? dispatch(updateCourseSuccess(course)) : dispatch(createCourseSuccess(course));
 		}).catch(error => {
+			dispatch(ajaxCallError(error));
 			throw(error);
 		});
 	};
