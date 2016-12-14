@@ -8,7 +8,7 @@
     "open-src": "babel-node buildScripts/srcServer.js",
     "lint": "node_modules/.bin/esw webpack.config.* src buildScripts --color",
     "lint-w": "npm run lint -- --watch",
-    "test": "mocha --reporter nyan buildScripts/testSetup.js \"src/**/*.test.js\"",
+    "test": "mocha --reporter spec buildScripts/testSetup.js \"src/**/*.test.js\"",
     "test-w": "npm run test -- --watch",
     "clean-dist": "npm run remove-dist && mkdir dist",
     "remove-dist": "node_modules/.bin/rimraf ./dist",
